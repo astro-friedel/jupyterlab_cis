@@ -23,10 +23,9 @@
     "extension": true
   },
   "scripts": {
-    "build": "tsc",
     "clean": "rimraf lib",
     "watch": "tsc -w",
-    "prepare": "npm run clean && npm run build"
+    "prepare": "npm run clean"
   },
   "dependencies": {
     "@jupyterlab/application": ">=0.18.0",
