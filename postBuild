@@ -1,0 +1,37 @@
+#!/bin/bash
+set -e
+
+jupyter serverextension enable --py jupyterlab --sys-prefix
+export CWDIR=`pwd`
+
+cd /home/jovyan
+jupyter labextension install jupyterlab-plotly
+yarn add @jupyterlab/launcher-extension
+jupyter labextension install @jupyter-widgets/jupyterlab-manager
+yarn add @jupyterlab/hub-extension
+
+export SRCDIR="/home/jovyan/work/jupyterlab_cis"
+mkdir -p $SRCDIR
+cd $SRCDIR
+
+ln -s /home/jovyan/node_modules
+
+cp $CWDIR/package1.json package.json
+yarn install
+
+rm package.json
+cp $CWDIR/package.json .
+cp -r $CWDIR/src .
+cp -r $CWDIR/style .
+cp $CWDIR/tsconfig.json .
+
+jupyter labextension install
+
+git clone https://github.com/astro-friedel/cy-jupyterlab /home/jovyan/work/cy-jupyterlab
+
+cd /home/jovyan/work/cy-jupyterlab
+jupyter labextension install
+
+cd /home/jovyan
+
+jupyter serverextension enable --py nbgitpuller --sys-prefix
